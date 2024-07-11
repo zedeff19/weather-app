@@ -2,7 +2,9 @@
 
 # Weather App
 
-![Weather App Screenshot](weather_app_screenshot.png)
+![Weather App Screenshot](./Screenshot%202024-07-11%20170752.png)
+
+![](./Screenshot%202024-07-11%20170837.png)
 
 A React-based weather application that allows users to fetch real-time weather data of any city, view a 5-day weather forecast, and visualize weather data using graphs.
 
@@ -57,5 +59,5 @@ Once the app is running, you can access it at `http://localhost:3000` in your we
 
 ## Contact
 
-For questions or feedback, please contact stanay04@gmail.com or https://www.linkedin.com/in/tanay-srivastava-0ba710248/
+For questions or feedback, please contact ![].(stanay04@gmail.com) or https://www.linkedin.com/in/tanay-srivastava-0ba710248/
 
