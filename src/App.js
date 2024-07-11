@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { auth } from './components/firebase';
+import ParallaxComp from './components/ParallaxComp';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/home" element={<Weather />} />
             <Route path='/profile' element={<Profile />}/>
+            <Route path='/parallax' element={<ParallaxComp />}/>
           </Routes>
             
           </div>

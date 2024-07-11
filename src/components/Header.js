@@ -6,7 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import {motion} from 'framer-motion';
 import Button from '@mui/material/Button';
 
-const Header = () => {
+
+const Header = ({handleLogout}) => {
   return (
     <div className="">
       {/* <div className="flex items-center">
@@ -32,9 +33,7 @@ const Header = () => {
           variant="contained"
           color="secondary"
           size="small"
-          onClick={() => {
-            alert('clicked');
-          }}
+          onClick={() =>  handleLogout()}
           sx={{  right: 10, position: 'absolute', marginY : 'auto', color: 'white'}}
         >
           Log Out

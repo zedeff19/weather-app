@@ -22,8 +22,8 @@ import { getDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
 import { arrayUnion, updateDoc } from 'firebase/firestore';
 import FavouritesComp from './FavouritesComp';
-
-
+// import Typewriter from 'typewriter-effect/dist/core';
+import Typewriter from 'typewriter-effect';
 
 const theme = createTheme({
   palette: {
@@ -49,6 +49,8 @@ const theme = createTheme({
       fontSize: '0.875rem',
     },
   },
+  //set z index to 100
+  
 });
 
 const Weather = () => {
@@ -96,6 +98,9 @@ const Weather = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setUserDetails(docSnap.data());
+          if (docSnap.data().favorites) {
+            setFavourites(docSnap.data().favorites); // Update local state with favorites from Firestore
+          }
         } else {
           console.log("User data not found");
         }
@@ -104,6 +109,8 @@ const Weather = () => {
       }
     });
   };
+  
+  
 
   useEffect(() => {
     fetchUserData();
@@ -113,42 +120,76 @@ const Weather = () => {
   const addFavoriteToDB = async (cityName) => {
     if (!Favourites.includes(cityName)) {
       try {
-        const userDocRef = doc(db, 'Users', userDetails.uid); // Assuming 'Users' is your collection and 'uid' is the user's unique identifier
+        const userDocRef = doc(db, 'Users', userDetails.uid);
         await updateDoc(userDocRef, {
-          favorites: arrayUnion(cityName) // Add the new favorite city to the 'favorites' array
+          favorites: arrayUnion(cityName)
         });
         setFavourites(prevFavourites => [...prevFavourites, cityName]); // Update local state
+        console.log('Favorite added successfully!');
       } catch (error) {
         console.error('Error adding favorite:', error);
-        // Handle error as needed (e.g., show a notification)
+        // Handle error as needed
       }
     }
   };
+  
+  
 
 
   function addFavourite(city) {
-    if (!Favourites.includes(city)) { // Check if city is already in favourites
-      setFavourites(prevFavourites => [...prevFavourites, city]); // Use functional update form
+    if (!Favourites.includes(city)) {
+      setFavourites(prevFavourites => [...prevFavourites, city]); // Update local state optimistically
       addFavoriteToDB(city); // Add the city to the database
     }
-    console.log(Favourites);
   }
+  
 
   function handleFavouriteClick(city) {
     setCity(city);
     fetchWeather();
   }
 
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      window.location.href = "/login";
+      // setFavourites([]);
+      // setUserDetails(null);
+      console.log("User logged out successfully!");
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header handleLogout= {handleLogout} />
 
 
       <div className="py-6 flex flex-col items-center" style={{ backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
 
         {userDetails &&
-          <p>Hi there, {userDetails.firstName}</p>
+          <Typography variant='h5' gutterBottom>
+            hi there {userDetails.firstName}
+          </Typography>
         }
+<br></br>
+
+<Typewriter
+  onInit={(typewriter) => {
+    typewriter.typeString('hi there')
+      .callFunction(() => {
+        console.log('String typed out!');
+      })
+      .pauseFor(2500)
+      .deleteAll()
+      .callFunction(() => {
+        console.log('All strings were deleted');
+      })
+      .start();
+  }}
+/>
+
         <div className="search-container w-full max-w-md px-6 flex flex-col items-center" style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           
           {loading ? (

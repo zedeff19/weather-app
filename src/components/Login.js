@@ -32,7 +32,7 @@ function Login() {
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card p-4 shadow-sm">
-            <h3 className="text-center mb-4">Login</h3>
+            <h3 className="text-center mb-4 bg-blue-600 m-x-4 my-2 p-2 text-white w-fit mx-auto rounded-lg shadow-lg">Login</h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label className="form-label">Email address</label>
@@ -62,7 +62,7 @@ function Login() {
                 </button>
               </div>
               <p className="forgot-password text-right mt-3">
-                New user? <a href="/register" >Register Here</a>
+                New user?  <span className=" underline"><a href="/register" >Register Here</a></span> 
               </p>
               {/* <SignInwithGoogle/> */}
             </form>
