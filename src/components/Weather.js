@@ -20,6 +20,9 @@ import Header from './Header';
 import { auth } from './firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
+import { arrayUnion, updateDoc } from 'firebase/firestore';
+import FavouritesComp from './FavouritesComp';
+
 
 
 const theme = createTheme({
@@ -106,11 +109,34 @@ const Weather = () => {
     fetchUserData();
   }, []);
 
+
+  const addFavoriteToDB = async (cityName) => {
+    if (!Favourites.includes(cityName)) {
+      try {
+        const userDocRef = doc(db, 'Users', userDetails.uid); // Assuming 'Users' is your collection and 'uid' is the user's unique identifier
+        await updateDoc(userDocRef, {
+          favorites: arrayUnion(cityName) // Add the new favorite city to the 'favorites' array
+        });
+        setFavourites(prevFavourites => [...prevFavourites, cityName]); // Update local state
+      } catch (error) {
+        console.error('Error adding favorite:', error);
+        // Handle error as needed (e.g., show a notification)
+      }
+    }
+  };
+
+
   function addFavourite(city) {
     if (!Favourites.includes(city)) { // Check if city is already in favourites
       setFavourites(prevFavourites => [...prevFavourites, city]); // Use functional update form
+      addFavoriteToDB(city); // Add the city to the database
     }
     console.log(Favourites);
+  }
+
+  function handleFavouriteClick(city) {
+    setCity(city);
+    fetchWeather();
   }
 
   return (
@@ -209,10 +235,43 @@ const Weather = () => {
             </Box>
           )} */}
         </div>
+        
+        <div className="search-container mt-12 w-full max-w-md px-6 flex flex-col items-center" style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '600px' }}>
+            <Typography variant='h5' gutterBottom>
+              Favourite Cities
+            </Typography>
+
+            {Favourites.length===0  ?
+              <Typography variant='body1' gutterBottom>
+                No favourite cities added
+              </Typography>
+              : (
+            Favourites.map((favCity, index) => (
+              <Button
+                key={index}
+                variant="outlined"
+                onClick={() => handleFavouriteClick(favCity)}
+                sx={{ textTransform: 'none', my: '0.5rem' }}
+              >
+                {favCity}
+              </Button>
+            ))
+          )}
+        </div>
+
+        {/* <FavouritesComp Favourites={Favourites} City={city} setCity={setCity} fetchWeather={fetchWeather} />   */}
 
         {weather && <Forecast weather={weather} city={city} error={error} />}
         {weather && <Charts temps={temps} dates={dates} />}
       </div>
+
+      <FavouritesComp
+        Favourites={Favourites} 
+        City={city}
+        setCity={setCity}
+        fetchWeather={fetchWeather}
+        
+      />
     </ThemeProvider>
   );
 };

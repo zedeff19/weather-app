@@ -4,6 +4,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 // import Typography from '@mui/material/Typography';
 import {motion} from 'framer-motion';
+import Button from '@mui/material/Button';
+
 const Header = () => {
   return (
     <div className="">
@@ -25,6 +27,19 @@ const Header = () => {
           >
             Weather App
           </motion.Typography>
+
+          <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={() => {
+            alert('clicked');
+          }}
+          sx={{  right: 10, position: 'absolute', marginY : 'auto', color: 'white'}}
+        >
+          Log Out
+        </Button>
+
         </Toolbar>
       </AppBar>
     </div>
