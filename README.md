@@ -1,6 +1,4 @@
-Sure! Here’s a README template for your weather app project:
 
----
 
 # Weather App
 

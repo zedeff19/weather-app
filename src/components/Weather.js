@@ -8,7 +8,10 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+//icons import
 import ThermostatTwoToneIcon from '@mui/icons-material/ThermostatTwoTone';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+//
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Forecast from './Forecast';
 import WeatherComponent from './WeatherComponent';
@@ -54,6 +57,10 @@ const Weather = () => {
   const [dates, setDates] = useState(['2022-10-10', '2022-10-11', '2022-10-12', '2022-10-13', '2022-10-14']);
   const API_KEY = '41f6250616c8fb4ddbebed59a001b6e1';
   const [userDetails, setUserDetails] = useState(null);
+  const [Favourites, setFavourites] = useState([ ]); 
+
+
+  
 
   const fetchWeather = async () => {
     if (!city) return;
@@ -99,6 +106,13 @@ const Weather = () => {
     fetchUserData();
   }, []);
 
+  function addFavourite(city) {
+    if (!Favourites.includes(city)) { // Check if city is already in favourites
+      setFavourites(prevFavourites => [...prevFavourites, city]); // Use functional update form
+    }
+    console.log(Favourites);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -134,6 +148,22 @@ const Weather = () => {
           >
             Search
           </Button>
+          <Button
+            variant="contained"
+            onClick={() => addFavourite(city)}
+            fullWidth
+            sx={{
+              mb: '1rem',
+              backgroundColor: '#f50057',
+              color: '#fff',
+              '&:hover': {
+                backgroundColor: '#c51162', // Darker version of #f50057
+              },
+            }}
+          >
+  <FavoriteRoundedIcon /> Add to Favourites
+</Button>
+
 
           {city === '' && <Alert severity="info">Please enter a city name</Alert>}
           {error && <Alert severity="error">{error}</Alert>}
