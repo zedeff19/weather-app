@@ -120,7 +120,7 @@ const Weather = () => {
   const addFavoriteToDB = async (cityName) => {
     if (!Favourites.includes(cityName)) {
       try {
-        const userDocRef = doc(db, 'Users', userDetails.uid);
+        const userDocRef = doc(db, 'Users', auth.currentUser.uid);
         await updateDoc(userDocRef, {
           favorites: arrayUnion(cityName)
         });
