@@ -37,7 +37,12 @@ const ParallaxComp = () => {
         <ParallaxLayer offset={1} speed={0.35}>
           <div className="animation_layer parallax" id="jungle5"></div>
         </ParallaxLayer>
-        
+
+        <ParallaxLayer offset={0} speed={0}>
+          <div className="weather-container">
+            <Weather />
+          </div>
+        </ParallaxLayer>
       </Parallax>
     </div>
   );

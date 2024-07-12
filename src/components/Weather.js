@@ -6,7 +6,6 @@ import Alert from '@mui/material/Alert';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 //icons import
 import ThermostatTwoToneIcon from '@mui/icons-material/ThermostatTwoTone';
@@ -21,9 +20,6 @@ import { auth } from './firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
 import { arrayUnion, updateDoc } from 'firebase/firestore';
-import FavouritesComp from './FavouritesComp';
-// import Typewriter from 'typewriter-effect/dist/core';
-import Typewriter from 'typewriter-effect';
 
 const theme = createTheme({
   palette: {
@@ -75,8 +71,8 @@ const Weather = () => {
         `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
       );
       setWeather(response.data);
-      setTemps(response.data.list.map((item) => item.main.temp));
-      setDates(response.data.list.map((item) => item.dt_txt.split(' ')[0]));
+      setTemps(response.data.list.filter((item) => item.dt_txt.endsWith("12:00:00")).map((item) => item.main.temp));
+      setDates(response.data.list.filter((item) => item.dt_txt.endsWith("12:00:00")).map((item) => item.dt_txt.split(' ')[0]));
       setError('');
     } catch (err) {
       setError('City not found');
@@ -173,22 +169,9 @@ const Weather = () => {
             hi there {userDetails.firstName}
           </Typography>
         }
-<br></br>
+        <br></br>
 
-<Typewriter
-  onInit={(typewriter) => {
-    typewriter.typeString('hi there')
-      .callFunction(() => {
-        console.log('String typed out!');
-      })
-      .pauseFor(2500)
-      .deleteAll()
-      .callFunction(() => {
-        console.log('All strings were deleted');
-      })
-      .start();
-  }}
-/>
+        
 
         <div className="search-container w-full max-w-md px-6 flex flex-col items-center" style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           
@@ -306,13 +289,13 @@ const Weather = () => {
         {weather && <Charts temps={temps} dates={dates} />}
       </div>
 
-      <FavouritesComp
+      {/* <FavouritesComp
         Favourites={Favourites} 
         City={city}
         setCity={setCity}
         fetchWeather={fetchWeather}
         
-      />
+      /> */}
     </ThemeProvider>
   );
 };

@@ -46,11 +46,17 @@ Once the app is running, you can access it at `http://localhost:3000` in your we
 - Fetch real-time weather data of any city.
 - Display a 5-day weather forecast.
 - Visualize weather data using graphs.
+- Keep a track of favourite cities for easy access.
 
 ## Tech Stack
 
 - **Frontend**: React, Material-UI, Bootstrap
 - **Backend**: Firebase (authentication and database management)
+
+## Future Enchancement
+- **Geolocation Support**: Add automatic geolocation detection to fetch and display weather data based on the user's current location without needing to manually input a city.
+- **Multilingual Support**: Add support for multiple languages to make the app accessible to a global audience.
+- **Personalised Dashboard**: Get personalised news, updates, even songs and movie recommendation based on the user and weather. 
 
 ## Acknowledgements
 

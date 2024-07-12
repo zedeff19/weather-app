@@ -37,6 +37,18 @@
   }
 }
 
+.weather-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100; /* Ensure it sits on top of other layers */
+}
+
 
 #textblock {
   background-color: #210002;

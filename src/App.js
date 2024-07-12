@@ -36,7 +36,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/home" element={<Weather />} />
             <Route path='/profile' element={<Profile />}/>
-            <Route path='/parallax' element={<ParallaxComp />}/>
+            <Route path='/parallax' element={<ParallaxComp children={<Weather />} />}/>
+          
           </Routes>
             
           </div>
